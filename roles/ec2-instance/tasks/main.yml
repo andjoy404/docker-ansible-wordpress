@@ -1,0 +1,33 @@
+---
+# tasks file for ec2-instance
+- name: LAUNCHING EC2-INSTANCE
+  ec2:
+    key_name: "{{ key_pair }}"
+    instance_type: "{{ inst_flav }}"
+    image: "{{ ami }}"
+    wait: true
+    group_id: "sg-xxx"
+    count: 1
+    vpc_subnet_id: "{{ subnet }}"
+    assign_public_ip: yes
+    region: "{{ reg_name }}"
+    zone: "{{ zone }}"
+    state: present
+    instance_tags:
+      name: "{{ inst_tag }}"
+    aws_access_key: "{{ access_key }}"
+    aws_secret_key: "{{ secret_key }}"
+  register: instance
+
+- debug:
+  var: instance
+- name: ADDING HOST OF INSTANCE
+  add_host:
+    hostname: "{{ instance.instance[0].public_ip }}"
+    groupname: ec2_wordpress
+
+- name: WAIT FOR SSH
+  wait_for:
+    host: "{{ instance.instance[0].public_dns_name }}"
+    port: 22
+    state: started

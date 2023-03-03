@@ -1,0 +1,36 @@
+---
+# tasks file for wordpress
+- name: INSTALLING DEPENDECIES OF WORDPRESS
+  package:
+    name:
+      - httpd
+      - mysql
+    state: present
+
+- name: DOWNLOAD WORDPRESS FILE
+  get_url:
+    url: https://wordpress.org/latest.tar.gz
+    dest: /var/www/html
+
+- name: EXTRACT TAR FILE INTO
+  ansible.builtin.unarchive:
+    src: "wordpress-5.7.1.tar.gz"
+    dest: /var/www/html
+
+- name: TO INSTALL PHP 7.4 VERSION
+  command: "amazon-linux-extras enable php7.4"
+
+- name: INSTALLATION
+  package:
+    name:
+      - php-cli
+      - php-pdo
+      - php-fpm
+      - php-json
+      - php-mysqlnd
+    state: present
+
+- name: STARTING HTTPD SERVICE
+  service:
+    name: httpd
+    state: started

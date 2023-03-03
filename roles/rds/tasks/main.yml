@@ -1,0 +1,21 @@
+---
+# tasks file for rds
+- name: RDS
+  rds:
+    command: create
+    region: "{{ region_name }}"
+    zone: "{{ zone }}"
+    instance_name: "{{ inst_name }}"
+    db_engine: "{{ eng_name }}"
+    size: 10 # determines the storage size in GB
+    instance_type: "{{ inst_type }}"
+    publicly_accessible: no
+    backup_retention: 0
+    username: "{{ username }}"
+    password: "{{ password }}"
+    db_name: "{{ db_name }}" 
+    aws_access_key: "{{ access_key }}"
+    aws_secret_key: "{{ secret_key }}"
+    tags:
+        Environment: testing
+        Application: wordpress

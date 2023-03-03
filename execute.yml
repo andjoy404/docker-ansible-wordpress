@@ -1,0 +1,25 @@
+- hosts: localhost
+  gather_facts: no
+  vars_files:
+        - cred.yml
+  tasks:
+    - name: RUNNING EC2-INSTANCE ROLE
+      include_role:
+        name: ec2-instance
+
+- hosts: ec2_wordpress
+  gather_facts: no
+  tasks:
+    - name: CONFIGURING WORDPRESS
+      include_role:
+         name: wordpress
+
+- hosts: localhost
+  gather_facts: no
+  vars_files:
+        - cred.yml
+  tasks:
+    - name: RUNNING RDS ROLE
+      include_role:
+        name: rds
+

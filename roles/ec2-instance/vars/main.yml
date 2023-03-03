@@ -1,0 +1,9 @@
+---
+# vars file for ec2-instance
+int_tag: wordpress
+reg_name: ap-south-1
+zone: ap-south-1a
+subnet: subnet-xxx
+ami: amin-xxx
+key_pair: key
+int_flav: t2.micro
